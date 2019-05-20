@@ -1,16 +1,16 @@
 package com.example.mvvm.base;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.mvvm.helper.AppManager;
 
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends ViewModel> extends AppCompatActivity {
+
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
 
     protected V binding;
@@ -36,9 +36,13 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends ViewMod
 
     }
 
-    protected abstract void initView();
+    protected void initView(){
 
-    protected abstract void initEvent();
+    }
+
+    protected void initEvent(){
+
+    }
 
     public abstract int getContentView();
 

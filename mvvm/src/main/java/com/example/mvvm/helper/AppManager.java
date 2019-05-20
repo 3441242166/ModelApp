@@ -1,4 +1,4 @@
-package com.example.mvvm.base;
+package com.example.mvvm.helper;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;

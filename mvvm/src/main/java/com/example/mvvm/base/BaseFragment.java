@@ -1,5 +1,6 @@
 package com.example.mvvm.base;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -51,13 +52,21 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         }
     }
 
-    protected abstract void initData(Bundle savedInstanceState);
+    protected void initData(Bundle savedInstanceState){
 
-    protected abstract void initEvent();
+    }
 
-    protected abstract void initView();
+    protected void initEvent(){
 
-    public abstract void initParam(Bundle savedInstanceState);
+    }
+
+    protected void initView(){
+
+    }
+
+    public void initParam(Bundle savedInstanceState){
+
+    }
 
     protected abstract int getContentView();
 
