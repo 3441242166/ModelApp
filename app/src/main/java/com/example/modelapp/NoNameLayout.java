@@ -62,6 +62,7 @@ public class NoNameLayout extends ViewGroup {
         } else {
             throw new RuntimeException("height can not is match_parent in ScrollView");
         }
+
         Log.i(TAG, "1.onLayout: width = " + layoutWidth + "  height = " + layoutHeight);
         setMeasuredDimension(layoutWidth, layoutHeight);
 
@@ -106,6 +107,7 @@ public class NoNameLayout extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, "onTouchEvent: ");
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
@@ -163,6 +165,7 @@ public class NoNameLayout extends ViewGroup {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
+                startY = event.getY();
                 Log.i(TAG, "onInterceptTouchEvent: DOWN");
                 break;
             }
@@ -179,9 +182,10 @@ public class NoNameLayout extends ViewGroup {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             return false;
         }
+
         // 只有bottomView才考虑是否拦截
-        Log.i(TAG, "onInterceptTouchEvent: event.getY = " + event.getRawY() + "  centerView.getHeight = " + centerView.getHeight());
-        if (getScrollY() > centerView.getHeight() && event.getRawY() > centerView.getHeight()) {
+        if (getScrollY() > centerView.getMeasuredHeight()
+                && event.getRawY() > centerView.getMeasuredHeight()) {
             Log.i(TAG, "onInterceptTouchEvent: Return True");
             return true;
         }
@@ -191,9 +195,6 @@ public class NoNameLayout extends ViewGroup {
 
     public void openBottomLayout() {
         Log.i(TAG, "openBottomLayout: ");
-        if (state == State.CENTER) {
-
-        }
         scroller.startScroll(getScrollX(), getScrollY(), getScrollX(), layoutHeight - getScrollY(), 500);
         invalidate();
         state = State.BOTTOM;
@@ -201,9 +202,6 @@ public class NoNameLayout extends ViewGroup {
 
     public void closeBottomLayout() {
         Log.i(TAG, "closeBottomLayout: ");
-        if (state == State.BOTTOM) {
-
-        }
         scroller.startScroll(getScrollX(), getScrollY(), getScrollX(), - getScrollY(), 500);
         invalidate();
         state = State.TOP;

@@ -188,9 +188,6 @@ public class NoNameLayout extends ViewGroup {
 
     public void openBottomLayout() {
         Log.i(TAG, "openBottomLayout: ");
-        if (state == State.CENTER) {
-
-        }
         scroller.startScroll(getScrollX(), getScrollY(), getScrollX(), layoutHeight - getScrollY(), 500);
         invalidate();
         state = State.BOTTOM;
@@ -198,9 +195,6 @@ public class NoNameLayout extends ViewGroup {
 
     public void closeBottomLayout() {
         Log.i(TAG, "closeBottomLayout: ");
-        if (state == State.BOTTOM) {
-
-        }
         scroller.startScroll(getScrollX(), getScrollY(), getScrollX(), - getScrollY(), 500);
         invalidate();
         state = State.TOP;

@@ -28,37 +28,67 @@ public class MyViewPager extends ViewPager {
         mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
 
-    private float startX, startY;
-    private boolean isInit = false;
+    private float downX, downY;
+    // 上下滑只判断一次
+    private boolean initDirection = false;
 
+    // 上下滑取决于子ViewGroup是否可以上下滑动
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i(TAG, "dispatchTouchEvent: DOWN");
-                startX = ev.getX();
-                startY = ev.getY();
+                downX = event.getX();
+                downY = event.getY();
                 getParent().requestDisallowInterceptTouchEvent(true);
-                isInit = false;
+                initDirection = false;
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
                 Log.i(TAG, "dispatchTouchEvent: MOVE");
-                float difX = ev.getX() - startX;
-                float difY = ev.getY() - startY;
+                float difX = event.getX() - downX;
+                float difY = event.getY() - downY;
+                // 如果不满足最小滑动条件
                 if (difX < mScaledTouchSlop && difY < mScaledTouchSlop) {
                     break;
                 }
-                if (!isInit && Math.abs(difX) < Math.abs(difY)) {
+
+                // 当子ViewGroup不需要上划事件时
+                if (!initDirection && Math.abs(difX) < Math.abs(difY)) {
                     Log.i(TAG, "dispatchTouchEvent: True");
+                    // 代表父ViewGroup拦截 事件交个父ViewGroup的onTouchEvent处理
                     getParent().requestDisallowInterceptTouchEvent(false);
                 }
-                isInit = true;
+                initDirection = true;
                 break;
             }
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                Log.i(TAG, "onInterceptTouchEvent: DOWN");
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                Log.i(TAG, "onInterceptTouchEvent: MOVE");
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+                Log.i(TAG, "onInterceptTouchEvent: UP");
+                break;
 
         }
 
-        return super.dispatchTouchEvent(ev);
+
+
+
+        return super.onInterceptTouchEvent(event);
     }
+
 }
