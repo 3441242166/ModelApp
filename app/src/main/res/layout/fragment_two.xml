@@ -7,17 +7,20 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:background="#000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+        <com.example.modelapp.costomview.CompassView
+            android:id="@+id/compass"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Two"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

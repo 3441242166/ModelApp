@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".activity.MainActivity">
 
-        <com.example.modelapp.NoNameLayout
+        <com.example.modelapp.costomview.NoNameLayout
             android:id="@+id/group"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -16,10 +16,7 @@
             <LinearLayout
                 android:id="@+id/center"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="#00BCD4"
-                android:orientation="horizontal">
-
+                android:layout_height="wrap_content">
             </LinearLayout>
 
             <android.support.design.widget.BottomNavigationView
@@ -28,13 +25,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.example.modelapp.MyViewPager
+            <com.example.modelapp.costomview.MyViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#FFEB3B" />
 
-        </com.example.modelapp.NoNameLayout>
+        </com.example.modelapp.costomview.NoNameLayout>
 
     </LinearLayout>
 </layout>

@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.v4.app.Fragment;
 
 import com.example.modelapp.fragment.FourFragment;
-import com.example.modelapp.fragment.ListFragment;
 import com.example.modelapp.fragment.OneFragment;
 import com.example.modelapp.fragment.ThreeFragment;
 import com.example.modelapp.fragment.TwoFragment;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class MainActivityModel extends BaseViewModel {
 
-    MutableLiveData<List<Fragment>> fragments;
+    private MutableLiveData<List<Fragment>> fragments;
 
     public List<Fragment> getFragments(){
         if (fragments == null) {

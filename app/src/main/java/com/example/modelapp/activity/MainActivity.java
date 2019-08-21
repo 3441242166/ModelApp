@@ -38,9 +38,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     @Override
     protected void initEvent() {
         binding.bottom.setOnNavigationItemSelectedListener(item -> {
-                    binding.group.openBottomLayout();
-                    return false;
-                });
+            binding.group.openBottomLayout();
+            return false;
+        });
         binding.bottom.setOnNavigationItemSelectedListener(item -> {
             binding.group.openBottomLayout();
             switch (item.getItemId()) {
@@ -60,10 +60,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
             return false;
         });
 
-        binding.viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        binding.viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         binding.bottom.setSelectedItemId(R.id.main_menu_home);
                         break;
@@ -85,5 +85,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     public int getContentView() {
         return R.layout.activity_main;
     }
-
 }

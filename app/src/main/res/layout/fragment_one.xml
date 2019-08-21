@@ -6,22 +6,9 @@
 
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:contentDescription="@string/description"
-                android:layout_width="match_parent"
-                android:scaleType="fitXY"
-                android:layout_height="2000dp"
-                app:srcCompat="@mipmap/ic_launcher" />
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 </layout>

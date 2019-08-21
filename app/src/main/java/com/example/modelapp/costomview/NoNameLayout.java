@@ -1,7 +1,6 @@
-package com.example.modelapp;
+package com.example.modelapp.costomview;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -9,8 +8,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
-
-import com.example.mvvm.net.rx.RxRetrofitClient;
 
 public class NoNameLayout extends ViewGroup {
     private static final String TAG = "NoNameLayout";
@@ -153,7 +150,6 @@ public class NoNameLayout extends ViewGroup {
                     }
                 }
             }
-
         }
 
         return true;

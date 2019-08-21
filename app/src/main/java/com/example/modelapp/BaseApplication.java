@@ -13,6 +13,5 @@ public class BaseApplication extends Application {
         Config.init(this)
                 .add(Constant.API_HOST,"https://www.baidu.com/")
                 .configure();
-
     }
 }

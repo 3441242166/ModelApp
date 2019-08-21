@@ -1,4 +1,4 @@
-package com.example.modelapp;
+package com.example.modelapp.costomview;
 
 public class State {
     public final static int TOP = 0;

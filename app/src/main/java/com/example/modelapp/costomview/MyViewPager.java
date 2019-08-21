@@ -1,4 +1,4 @@
-package com.example.modelapp;
+package com.example.modelapp.costomview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -55,8 +55,10 @@ public class MyViewPager extends ViewPager {
                 }
 
                 // 当子ViewGroup不需要上划事件时
+                // 当手指有偏移 但是view没有偏移 说明到顶了
                 if (!initDirection && Math.abs(difX) < Math.abs(difY)) {
                     Log.i(TAG, "dispatchTouchEvent: True");
+
                     // 代表父ViewGroup拦截 事件交个父ViewGroup的onTouchEvent处理
                     getParent().requestDisallowInterceptTouchEvent(false);
                 }
