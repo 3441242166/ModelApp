@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activity.MainActivity">
-
-        <com.example.modelapp.costomview.NoNameLayout
-            android:id="@+id/group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </LinearLayout>
-
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottom"
-                app:menu="@menu/menu_main_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.example.modelapp.costomview.MyViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFEB3B" />
-
-        </com.example.modelapp.costomview.NoNameLayout>
-
-    </LinearLayout>
-</layout>
+</FrameLayout>

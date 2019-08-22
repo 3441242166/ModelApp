@@ -1,24 +1,26 @@
 package com.example.mvvm.base;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends Fragment {
-    private final String TAG = getClass().getSimpleName();
+import org.jetbrains.annotations.NotNull;
 
-    protected V binding;
+public abstract class BaseFragment<VM extends BaseViewModel> extends Fragment {
+    public final String TAG = getClass().getSimpleName();
+
     protected VM viewModel;
     protected Context mContext;
-    protected boolean isInit = true;
+    protected boolean isInitData = false;
+    protected boolean isInitView = false;
 
     @Override
     public void onAttach(Context context) {
@@ -35,36 +37,44 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container
+    public View onCreateView(@NotNull LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, getContentView(), container, false);
+        View view = inflater.inflate(getContentView(), container, false);
         isCanLoadData(savedInstanceState);
-
-        return binding.getRoot();
+        return view;
     }
 
-    protected void isCanLoadData(Bundle savedInstanceState) {
-        if (getUserVisibleHint() && !isInit) {
-            isInit = true;
-            initData(savedInstanceState);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getUserVisibleHint() && !isInitView) {
+            isInitView = true;
             initView();
             initEvent();
         }
     }
 
-    protected void initData(Bundle savedInstanceState){
+    protected void isCanLoadData(Bundle savedInstanceState) {
+        if (!isInitData) {
+            isInitData = true;
+            initData(savedInstanceState);
+
+        }
+    }
+
+    protected void initData(Bundle savedInstanceState) {
 
     }
 
-    protected void initEvent(){
+    protected void initEvent() {
 
     }
 
-    protected void initView(){
+    protected void initView() {
 
     }
 
-    public void initParam(Bundle savedInstanceState){
+    public void initParam(Bundle savedInstanceState) {
 
     }
 

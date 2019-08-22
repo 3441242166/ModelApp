@@ -1,29 +1,26 @@
 package com.example.mvvm.base;
 
-import android.arch.lifecycle.ViewModel;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mvvm.helper.AppManager;
+import com.jaeger.library.StatusBarUtil;
 
 
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
-    protected final String TAG = this.getClass().getSimpleName();
+public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatActivity {
+    public final String TAG = this.getClass().getSimpleName();
 
-    protected V binding;
     protected VM viewModel;
     protected Context mContext;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         beforeOnCreate();
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setTransparent(this);
+        setContentView(getContentView());
         mContext = this;
-        binding = DataBindingUtil.setContentView(this, getContentView());
         viewModel = getViewModel();
         initParam(savedInstanceState);
         initView();
