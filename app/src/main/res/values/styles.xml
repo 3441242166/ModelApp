@@ -9,4 +9,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="v_line">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#F0F0F0</item>
+    </style>
+
+    <style name="h_1_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#E6E6E6</item>
+    </style>
+
+    <style name="h_8_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">8dp</item>
+        <item name="android:background">#EBEBEB</item>
+    </style>
+
 </resources>

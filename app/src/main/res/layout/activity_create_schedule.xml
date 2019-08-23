@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.CreateScheduleActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:padding="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="保存"
+        android:textColor="#3F51B5"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ems="10"
+            android:hint="添加主题"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <View
+            style="@style/h_1_line" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/editText">
+
+            <TextView
+                android:background="#8BC34A"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:background="#03A9F4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <View
+            style="@style/h_8_line" />
+
+        <com.example.modelapp.view.ImageTextItem
+            android:id="@+id/imageTextItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:content="添加参与者"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:left_icon="@drawable/x" />
+
+        <View
+            style="@style/h_8_line" />
+
+        <com.example.modelapp.view.ImageTextItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:content="万浩"
+            app:left_icon="@drawable/x" />
+
+        <View
+            style="@style/h_1_line"
+            android:layout_marginLeft="40dp"/>
+
+        <com.example.modelapp.view.ImageTextItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_icon="@drawable/x"
+            app:content="日程颜色" />
+
+        <View
+            style="@style/h_1_line"
+            android:layout_marginLeft="40dp"/>
+
+        <com.example.modelapp.view.ImageTextItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_icon="@drawable/x"
+            app:content="默认的公开范围" />
+
+        <View
+            style="@style/h_1_line"
+            android:layout_marginLeft="40dp"/>
+
+        <com.example.modelapp.view.ImageTextItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_icon="@drawable/x"
+            app:content="忙碌" />
+
+        <View
+            style="@style/h_8_line"/>
+
+        <com.example.modelapp.view.ImageTextItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_icon="@drawable/x"
+            app:content="五分钟前" />
+
+        <FrameLayout
+            android:background="#EBEBEB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <LinearLayout
+                android:background="#FDFDFD"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:padding="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:padding="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:padding="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:padding="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher" />
+            </LinearLayout>
+            
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,13 @@
 package com.example.modelapp.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.Gravity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.modelapp.R
+import com.example.modelapp.activity.CreateScheduleActivity
 import com.example.modelapp.util.logi
 import com.example.mvvm.base.BaseFragment
 import com.example.mvvm.base.BaseViewModel
@@ -15,10 +19,8 @@ class CalendarFragment : BaseFragment<CalendarFgViewModel>() {
 
     @SuppressLint("RtlHardcoded")
     override fun initEvent() {
-        logi("wanhao", "initEvent")
 
         menu_btn.setOnClickListener {
-            logi(TAG, "menu_click")
             drawerLayout.openDrawer(Gravity.LEFT)
         }
 
@@ -27,8 +29,12 @@ class CalendarFragment : BaseFragment<CalendarFgViewModel>() {
         }
 
         fab.setOnClickListener {
-            logi(TAG, "fab_click")
+            startActivity(Intent(context, CreateScheduleActivity::class.java))
         }
+
+        viewModel.date.observe(this, Observer {
+
+        })
     }
 
     override fun getViewModel() = ViewModelProviders.of(this).get(CalendarFgViewModel::class.java)
@@ -37,5 +43,6 @@ class CalendarFragment : BaseFragment<CalendarFgViewModel>() {
 }
 
 class CalendarFgViewModel : BaseViewModel() {
+    public val date: MutableLiveData<String> = MutableLiveData()
 
 }

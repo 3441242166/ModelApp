@@ -7,6 +7,6 @@ import com.example.mvvm.base.BaseViewModel
 
 class MainActivityModel : BaseViewModel() {
 
-    private val fragments: MutableLiveData<List<Fragment>> = MutableLiveData()
+    public val date: MutableLiveData<String> = MutableLiveData()
 
 }

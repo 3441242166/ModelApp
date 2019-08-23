@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="content" format="string" />
+    <attr name="left_icon" format="integer" />
+    <attr name="right_icon" format="integer" />
+
+    <declare-styleable name="ImageTextItem">
+        <attr name="content"/>
+        <attr name="left_icon"/>
+        <attr name="right_icon"/>
+    </declare-styleable>
+</resources>
