@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="45dp"
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/leftImage"
+        android:id="@+id/btLeftImage"
         android:layout_width="40dp"
         android:layout_height="match_parent"
         android:padding="13dp"
@@ -24,13 +25,13 @@
         android:gravity="center_vertical"
         android:textColor="#3D3D3D"
         android:textSize="14dp"
-        app:layout_constraintEnd_toStartOf="@+id/rightImage"
-        app:layout_constraintStart_toEndOf="@+id/leftImage"
+        app:layout_constraintEnd_toStartOf="@+id/btRightImage"
+        app:layout_constraintStart_toEndOf="@+id/btLeftImage"
         tools:layout_editor_absoluteY="0dp"
         tools:text="第一次吃饭" />
 
     <ImageView
-        android:id="@+id/rightImage"
+        android:id="@+id/btRightImage"
         android:layout_width="35dp"
         android:layout_height="match_parent"
         android:padding="13dp"

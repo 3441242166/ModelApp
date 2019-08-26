@@ -4,10 +4,21 @@
     <attr name="content" format="string" />
     <attr name="left_icon" format="integer" />
     <attr name="right_icon" format="integer" />
+    <attr name="left_title" format="string" />
+    <attr name="right_title" format="string" />
 
     <declare-styleable name="ImageTextItem">
         <attr name="content"/>
         <attr name="left_icon"/>
         <attr name="right_icon"/>
     </declare-styleable>
+
+    <declare-styleable name="MyToolbar">
+        <attr name="content"/>
+        <attr name="left_icon"/>
+        <attr name="right_icon"/>
+        <attr name="left_title"/>
+        <attr name="right_title"/>
+    </declare-styleable>
+    <declare-styleable name="SwitchDateTimeView"></declare-styleable>
 </resources>

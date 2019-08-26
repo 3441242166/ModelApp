@@ -29,13 +29,13 @@ class ImageTextItem @JvmOverloads constructor(context: Context, attrs: Attribute
         content.text = itemContent
 
         if (leftIcon != -1) {
-            leftImage.setImageResource(leftIcon)
-            leftImage.visibility = visibility
+            btLeftImage.setImageResource(leftIcon)
+            btLeftImage.visibility = visibility
         }
 
         if (rightIcon != -1) {
-            rightImage.setImageResource(rightIcon)
-            rightImage.visibility = visibility
+            btRightImage.setImageResource(rightIcon)
+            btRightImage.visibility = visibility
         }
 
         //setOnClickListener { onClick(this) }

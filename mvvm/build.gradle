@@ -29,12 +29,16 @@ android {
 }
 
 dependencies {
+    def room_version = "2.2.0-beta01"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     //图片压缩
@@ -43,10 +47,10 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     // 屏幕适配
     implementation 'me.jessyan:autosize:1.1.0'
-    //
+    // 工具类
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
     //Rx java ,Retrofit ,Ok http
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -55,7 +59,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     //eventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version" // use kapt for Kotlin
 }
 repositories {
     mavenCentral()

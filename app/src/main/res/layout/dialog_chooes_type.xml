@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/exit"
+        android:id="@+id/btExit"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="36dp"
