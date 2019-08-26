@@ -5,10 +5,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
-import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import com.example.modelapp.util.logi
+import kotlin.math.abs
 
 
 const val TAG = "RollerView"
@@ -17,13 +18,15 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     : View(context, attrs, defStyleAttr) {
 
     private val data = mutableListOf<String>()
-    private var recycled = true
-    private var position = 0
+    private val slidingWindow = mutableListOf<String>()
+    private var end = 0
+    private var begin = 0
 
     private val textPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private val mSelectedItemTextSize = 40f
     private val mTextSize = 30f
     private var diffVertical = 0
+    private var itemHeight = 0f
 
     init {
         textPaint.textSize = 28f
@@ -39,36 +42,87 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 resolveSize(widthSize, widthMeasureSpec),
                 resolveSize(heightSize, heightMeasureSpec)
         )
+
     }
 
     override fun onDraw(canvas: Canvas?) {
+        if (data.size == 0) {
+            return
+        }
+
         canvas?.run {
             translate((width / 2).toFloat(), (height / 2).toFloat() + diffVertical)
-            drawText("8月30日", 0f, height / 3f, textPaint)
-            drawText("8月29日", 0f, 0f, textPaint)
-            drawText("8月28日", 0f, -height / 3f, textPaint)
+
+            itemHeight = height / 3f
+
+            drawText(slidingWindow[0], 0f, -itemHeight * 2, textPaint)
+            drawText(slidingWindow[1], 0f, -itemHeight, textPaint)
+            drawText(slidingWindow[2], 0f, 0f, textPaint)
+            drawText(slidingWindow[3], 0f, itemHeight, textPaint)
+            drawText(slidingWindow[4], 0f, itemHeight * 2, textPaint)
+
+            // 设置字体大小 字体颜色 字体透明度
+
+            // 画矩形蒙版
+
 
         }
     }
 
-    fun getString(pos: Int): String {
-        if (pos < 0) {
-            return data[data.size + (pos % data.size)]
+    var lastDownY = 0
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
+
+            MotionEvent.ACTION_DOWN -> lastDownY = event.y.toInt()
+            MotionEvent.ACTION_MOVE -> {
+                val move = event.y - lastDownY
+                lastDownY = event.y.toInt()
+                val lastDiff = diffVertical
+
+                diffVertical += move.toInt()
+
+                diffVertical %= itemHeight.toInt()
+
+                if (move > 0 && lastDiff > diffVertical) {
+                    slidingWindow.removeAt(slidingWindow.size - 1)
+                    slidingWindow.add(0, data[begin])
+
+                    end = adjustIndex(end, false)
+                    begin = adjustIndex(begin, false)
+                } else if (move < 0 && lastDiff < diffVertical) {
+                    slidingWindow.removeAt(0)
+                    slidingWindow.add(data[end])
+
+                    end = adjustIndex(end, true)
+                    begin = adjustIndex(begin, true)
+                }
+                invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+
+            }
         }
-        if (pos > data.size) {
-            return data[pos % data.size]
+        return true
+    }
+
+    private fun adjustIndex(num: Int, isAdd: Boolean): Int {
+        return if (isAdd) {
+            if (num + 1 >= data.size) 0 else num + 1
+        } else {
+            if (num - 1 < 0) data.size - 1 else num - 1
         }
-        return data[pos]
     }
 
     fun setData(list: List<String>) {
         data.clear()
+        slidingWindow.clear()
         data.addAll(list)
+        for (i in 0..4) {
+            slidingWindow.add(data[i])
+        }
+        begin = data.size - 1
+        end = 5
         requestLayout()
-    }
-
-    fun setRecycled(recycled: Boolean) {
-        this.recycled = recycled
     }
 
 }

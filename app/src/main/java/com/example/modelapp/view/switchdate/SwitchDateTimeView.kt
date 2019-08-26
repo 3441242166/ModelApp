@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.modelapp.R
+import kotlinx.android.synthetic.main.view_switch_date.view.*
 
 class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
@@ -33,7 +34,7 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
         val inflater = LayoutInflater.from(getContext())
         inflater.inflate(R.layout.view_switch_date, this)
 
-
+        button3.setData(listOf("1","2","3","4","5","6","7","8","9","0"))
 
     }
 
