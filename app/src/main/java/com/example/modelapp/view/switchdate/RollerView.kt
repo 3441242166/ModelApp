@@ -19,7 +19,6 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     : View(context, attrs, defStyleAttr) {
 
     private val data = mutableListOf<String>()
-    private val slidingWindow = mutableListOf<String>()
     private var end = 0
     private var begin = 0
 
@@ -56,17 +55,26 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
             itemHeight = height / 3f
 
-            drawText(slidingWindow[0], 0f, -itemHeight * 2, textPaint)
-            drawText(slidingWindow[1], 0f, -itemHeight, textPaint)
-            drawText(slidingWindow[2], 0f, 0f, textPaint)
-            drawText(slidingWindow[3], 0f, itemHeight, textPaint)
-            drawText(slidingWindow[4], 0f, itemHeight * 2, textPaint)
+            drawText(data[getNumIndex(1)], 0f, -itemHeight * 2, textPaint)
+            drawText(data[getNumIndex(2)], 0f, -itemHeight, textPaint)
+            drawText(data[getNumIndex(3)], 0f, 0f, textPaint)
+            drawText(data[getNumIndex(4)], 0f, itemHeight, textPaint)
+            drawText(data[getNumIndex(5)], 0f, itemHeight * 2, textPaint)
 
             // 设置字体大小 字体颜色 字体透明度
+
 
             // 画矩形蒙版
 
 
+        }
+    }
+
+    private fun getNumIndex(num: Int): Int {
+        return if (begin + num >= data.size) {
+            begin + num - data.size
+        } else {
+            return begin + num
         }
     }
 
@@ -113,15 +121,9 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         diffVertical %= itemHeight.toInt()
 
         if (move > 0 && lastDiff > diffVertical) {
-            slidingWindow.removeAt(slidingWindow.size - 1)
-            slidingWindow.add(0, data[begin])
-
             end = adjustIndex(end, false)
             begin = adjustIndex(begin, false)
         } else if (move < 0 && lastDiff < diffVertical) {
-            slidingWindow.removeAt(0)
-            slidingWindow.add(data[end])
-
             end = adjustIndex(end, true)
             begin = adjustIndex(begin, true)
         }
@@ -138,13 +140,9 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     fun setData(list: List<String>) {
         data.clear()
-        slidingWindow.clear()
         data.addAll(list)
-        for (i in 0..4) {
-            slidingWindow.add(data[i])
-        }
-        begin = data.size - 1
-        end = 5
+        begin = data.size - 4
+        end = 2
         requestLayout()
     }
 
