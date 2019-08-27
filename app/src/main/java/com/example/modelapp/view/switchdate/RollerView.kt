@@ -1,5 +1,6 @@
 package com.example.modelapp.view.switchdate
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -69,7 +70,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
     }
 
-    var lastDownY = 0
+    private var lastDownY = 0
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
 
@@ -77,32 +78,54 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             MotionEvent.ACTION_MOVE -> {
                 val move = event.y - lastDownY
                 lastDownY = event.y.toInt()
-                val lastDiff = diffVertical
-
-                diffVertical += move.toInt()
-
-                diffVertical %= itemHeight.toInt()
-
-                if (move > 0 && lastDiff > diffVertical) {
-                    slidingWindow.removeAt(slidingWindow.size - 1)
-                    slidingWindow.add(0, data[begin])
-
-                    end = adjustIndex(end, false)
-                    begin = adjustIndex(begin, false)
-                } else if (move < 0 && lastDiff < diffVertical) {
-                    slidingWindow.removeAt(0)
-                    slidingWindow.add(data[end])
-
-                    end = adjustIndex(end, true)
-                    begin = adjustIndex(begin, true)
-                }
-                invalidate()
+                moveAction(move.toInt())
             }
             MotionEvent.ACTION_UP -> {
-
+                logi(TAG, diffVertical.toString())
+                if (abs(diffVertical) > (itemHeight / 2)) {
+                    if (diffVertical > 0)
+                        returnCenter(-(itemHeight - diffVertical).toInt())
+                    else
+                        returnCenter((itemHeight + diffVertical).toInt())
+                } else {
+                    returnCenter(diffVertical)
+                }
             }
         }
         return true
+    }
+
+    private fun returnCenter(start: Int) {
+        val valAnimation = ValueAnimator.ofInt(start, 0)
+        lastDownY = start
+        valAnimation.addUpdateListener {
+            val move = it.animatedValue as Int - lastDownY
+            lastDownY = it.animatedValue as Int
+            moveAction(move)
+        }
+        valAnimation.start()
+    }
+
+    private fun moveAction(move: Int) {
+        val lastDiff = diffVertical
+
+        diffVertical += move
+        diffVertical %= itemHeight.toInt()
+
+        if (move > 0 && lastDiff > diffVertical) {
+            slidingWindow.removeAt(slidingWindow.size - 1)
+            slidingWindow.add(0, data[begin])
+
+            end = adjustIndex(end, false)
+            begin = adjustIndex(begin, false)
+        } else if (move < 0 && lastDiff < diffVertical) {
+            slidingWindow.removeAt(0)
+            slidingWindow.add(data[end])
+
+            end = adjustIndex(end, true)
+            begin = adjustIndex(begin, true)
+        }
+        invalidate()
     }
 
     private fun adjustIndex(num: Int, isAdd: Boolean): Int {
