@@ -35,8 +35,9 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
         val inflater = LayoutInflater.from(getContext())
         inflater.inflate(R.layout.view_switch_date, this)
 
-//        dateRoller.setData(listOf("10月03日", "10月04日", "10月05日", "10月06日", "10月07日",
-//                "10月08日", "10月09日", "10月10日", "10月11日", "10月12日"))
+        dateRoller.setData(listOf("10月03日", "10月04日", "10月05日", "10月06日", "10月07日",
+                "10月08日", "10月09日", "10月10日", "10月11日", "10月12日"))
+        //dateRoller.setData(listOf("asd","qwe","zxc"))
         dateRoller.needCycle(false)
         hourRoller.setData(listOf("01", "02", "03", "04", "05", "06",
                 "07", "08", "09", "10", "11", "12",
@@ -54,13 +55,13 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
                 "25", "30", "35", "40", "45", "50", "55"))
         dayRoller.needCycle(false)
 
-        dateRoller.loadMore = {
-            listOf("xxx")
-        }
-
-        dateRoller.loadPreMore = {
-            listOf("yyy")
-        }
+//        dateRoller.loadMore = {
+//            listOf("xxx")
+//        }
+//
+//        dateRoller.loadPreMore = {
+//            listOf("yyy")
+//        }
 
         btBegin.setOnClickListener {
             startClick(it)

@@ -49,6 +49,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 }
                 data.addAll(newData)
             }
+            logi(TAG, "begin = $begin  end = $end")
             invalidate()
         }
 
@@ -73,10 +74,10 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         var widthSize = MeasureSpec.getSize(widthMeasureSpec)
         var heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
-        textSizeA = heightSize / 10f
-        textSizeB = textSizeA / 5 * 4
-        textSizeC = textSizeA / 5 * 3
-        textSizeDiff = textSizeA / 5
+        textSizeA = heightSize / 8f
+        textSizeB = textSizeA / 10 * 7
+        textSizeC = textSizeA / 10 * 4
+        textSizeDiff = textSizeB - textSizeC
 
         setMeasuredDimension(
                 resolveSize(widthSize, widthMeasureSpec),
@@ -164,7 +165,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 //logi(TAG,move.toString())
                 // 数据有范围 到达边界防止继续滑动
                 if (!isCycle && ((begin <= 0 && move > 0 && diffVertical >= 0) ||
-                                (end >= data.size + 4 && move < 0))) {
+                                (end >= data.size + (end - begin - 1) && move < 0))) {
                     if (begin < 0) {
                         begin = 0
                     }
@@ -227,14 +228,13 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         if (!isCycle) {
             if (isAdd && num + 1 >= data.size) {
                 data.addAll(loadMore())
-                return num + 1
+                return data.size
             }
-            if (!isAdd && num - 1 <= 1) {
+            if (!isAdd && num - 1 <= 0) {
                 val newData = loadPreMore()
                 data.addAll(0, newData)
-                begin += newData.size
                 end += newData.size
-                return num
+                return 0
             }
         }
 
@@ -255,7 +255,23 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         data.clear()
         data.addAll(list)
         begin = 0
-        end = 5
+        end = 5.coerceAtLeast(data.size)
+
+//        if (end in 1..4) {
+//            val newData = loadMore()
+//            if (newData.isEmpty()) {
+//                if (isCycle) {
+//                    data.addAll(0, data)
+//                    data.addAll(data)
+//                }
+//            } else {
+//                while (begin + 5 < data.size) {
+//                    data.addAll(newData)
+//                    end += newData.size
+//                }
+//            }
+//        }
+
         invalidate()
     }
 
