@@ -35,6 +35,8 @@ class CalendarFragment : BaseFragment<CalendarFgViewModel>() {
         viewModel.date.observe(this, Observer {
 
         })
+
+        context
     }
 
     override fun getViewModel() = ViewModelProviders.of(this).get(CalendarFgViewModel::class.java)
