@@ -1,5 +1,6 @@
 package com.example.modelapp.view.switchdate
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
@@ -12,8 +13,6 @@ import android.view.View
 import com.example.modelapp.util.logi
 import kotlin.math.abs
 
-
-const val TAG = "RollerView"
 
 class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : View(context, attrs, defStyleAttr) {
@@ -42,6 +41,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         set(value) {
             isCycle = false
             field = value
+
             while (data.size < begin + 5) {
                 val newData = field()
                 if (newData.isEmpty()) {
@@ -49,7 +49,6 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 }
                 data.addAll(newData)
             }
-            logi(TAG, "begin = $begin  end = $end")
             invalidate()
         }
 
@@ -57,6 +56,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         set(value) {
             isCycle = false
             field = value
+
             while (begin < 3) {
                 val newData = field()
                 if (newData.isNotEmpty()) {
@@ -69,6 +69,10 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             }
             invalidate()
         }
+
+    var selectListener: (String) -> Unit = {
+
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -162,15 +166,15 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 val move = event.y - lastDownY
                 lastDownY = event.y.toInt()
 
-                //logi(TAG,move.toString())
                 // 数据有范围 到达边界防止继续滑动
                 if (!isCycle && ((begin <= 0 && move > 0 && diffVertical >= 0) ||
                                 (end >= data.size + (end - begin - 1) && move < 0))) {
+                    logi("begin = $begin  end = $end  diff = $diffVertical  move = $move")
                     if (begin < 0) {
                         begin = 0
                     }
-                    if (end > data.size + 4) {
-                        end = data.size + 4
+                    if (end > data.size + (end - begin - 1)) {
+                        end = data.size + (end - begin - 1)
                     }
                     diffVertical = 0
                     return true
@@ -201,6 +205,21 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             lastDownY = it.animatedValue as Int
             moveAction(move)
         }
+        valAnimation.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                selectListener(data[begin])
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+            }
+
+        })
         valAnimation.start()
     }
 
@@ -208,6 +227,9 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private fun moveAction(move: Int) {
         val lastDiff = diffVertical
 
+        if (itemHeight.toInt() == 0) {
+            return
+        }
         diffVertical += move
         diffVertical %= itemHeight.toInt()
 
@@ -223,18 +245,17 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     // 滑动一个itemHeight后 调整数组下标
     private fun adjustIndex(num: Int, isAdd: Boolean): Int {
-        logi(TAG, "num : $num    isAdd : $isAdd")
-
         if (!isCycle) {
             if (isAdd && num + 1 >= data.size) {
                 data.addAll(loadMore())
                 return data.size
             }
-            if (!isAdd && num - 1 <= 0) {
+            if (!isAdd && num - 3 <= 0) {
                 val newData = loadPreMore()
                 data.addAll(0, newData)
                 end += newData.size
-                return 0
+                begin += newData.size
+                return begin - 1
             }
         }
 
@@ -247,8 +268,10 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     fun needCycle(needCycle: Boolean) {
         isCycle = needCycle
-        loadMore = { emptyList() }
-        loadMore = { emptyList() }
+        if (isCycle) {
+            loadMore = { emptyList() }
+            loadMore = { emptyList() }
+        }
     }
 
     fun setData(list: List<String>) {
@@ -257,20 +280,12 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         begin = 0
         end = 5.coerceAtLeast(data.size)
 
-//        if (end in 1..4) {
-//            val newData = loadMore()
-//            if (newData.isEmpty()) {
-//                if (isCycle) {
-//                    data.addAll(0, data)
-//                    data.addAll(data)
-//                }
-//            } else {
-//                while (begin + 5 < data.size) {
-//                    data.addAll(newData)
-//                    end += newData.size
-//                }
-//            }
-//        }
+        if (end < 5) {
+            if (!isCycle) {
+                loadMore = loadMore
+                loadPreMore = loadPreMore
+            }
+        }
 
         invalidate()
     }

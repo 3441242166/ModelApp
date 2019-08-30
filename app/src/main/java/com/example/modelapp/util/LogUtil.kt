@@ -6,8 +6,8 @@ import com.example.mvvm.base.BaseFragment
 import com.example.mvvm.base.BaseViewModel
 
 
-fun Any.logi(tag: String, msg: String) {
-    Log.i(tag, msg)
+fun Any.logi( msg: String) {
+    Log.i(javaClass.name, msg)
 }
 
 fun Any.loge(tag: String, msg: String) {

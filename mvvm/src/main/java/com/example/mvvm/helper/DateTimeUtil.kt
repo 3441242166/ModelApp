@@ -1,5 +1,6 @@
 package com.example.mvvm.helper
 
+import android.annotation.SuppressLint
 import android.util.Log
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -7,30 +8,32 @@ import java.util.*
 
 private val TAG = "DateUtil"
 
-enum class DateType(val str:String){
+@SuppressLint("CI_ByteDanceKotlinRules_Enum_Fields_All_Uppercase")
+enum class DateType(val str: String) {
     DATE_TIME("yyyy-MM-dd HH:mm:ss"),
     DATE_DATE("yyyy-MM-dd"),
     DATE_MONTH("yyyy-MM"),
+    MONTH_DAY("MM月dd日"),
     TIME("HH:mm:ss"),
 }
 
-fun getNowString(type:DateType = DateType.DATE_TIME):String{
+fun getNowString(type: String = DateType.DATE_TIME.str): String {
     val currentTime = Date()
-    val formatter = SimpleDateFormat(type.str)
+    val formatter = SimpleDateFormat(type)
     val dateString = formatter.format(currentTime)
     Log.i(TAG, "getNowDateTimeString   $dateString")
     return dateString
 }
 
-fun getDateString(date:Date,type: DateType = DateType.DATE_TIME): String {
-    val formatter = SimpleDateFormat(type.str)
+fun getDateString(date: Date, type: String = DateType.DATE_TIME.str): String {
+    val formatter = SimpleDateFormat(type)
     val dateString = formatter.format(date)
     Log.i(TAG, dateString)
     return dateString
 }
 
-fun getDateString(dateTime: String,type: DateType = DateType.DATE_TIME): String {
-    val formatter = SimpleDateFormat(type.str)
+fun getDateString(dateTime: String, type: String = DateType.DATE_TIME.str): String {
+    val formatter = SimpleDateFormat(type)
     var date = Date()
     try {
         date = formatter.parse(dateTime)
@@ -69,9 +72,9 @@ fun getDateByDateTimeString(date: String): Date {
     return mDate
 }
 
-fun getDateByDateString(date: String): Date {
+fun getDateByDateString(date: String, type: String): Date {
     var mDate = Date()
-    val format = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+    val format = SimpleDateFormat(type, Locale.CHINA)
     try {
         mDate = format.parse(date)
     } catch (e: ParseException) {
@@ -97,15 +100,35 @@ fun differentDay(bdate: String, smdate: String): Int {
 
 }
 
-fun getAddDayString(date: String, day: Int): String {
+fun getAddDayString(date: String, day: Int, type: String = DateType.DATE_TIME.str): String {
     val calendar = Calendar.getInstance()
-    calendar.timeInMillis = getDateByDateString(date).time
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    calendar.timeInMillis = getDateByDateString(date, type).time
+    val sdf = SimpleDateFormat(type)
     calendar.add(Calendar.DATE, day)
 
     return sdf.format(calendar.time)
 
 }
+
+fun getAddDayDate(date: Date, day: Int): Date {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = date.time
+    calendar.add(Calendar.DATE, day)
+
+    return calendar.time
+
+}
+
+fun getAddDayString(date: Date, day: Int, type: DateType = DateType.DATE_TIME): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = date.time
+    val sdf = SimpleDateFormat(type.str)
+    calendar.add(Calendar.DATE, day)
+
+    return sdf.format(calendar.time)
+
+}
+
 
 fun getTimeLongByString(time: String): Long {
     Log.i(TAG, "getTimeLongByString: time = $time")
