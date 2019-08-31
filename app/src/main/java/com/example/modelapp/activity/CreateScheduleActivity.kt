@@ -12,6 +12,7 @@ import com.example.modelapp.model.MainActivityModel
 import com.example.mvvm.base.BaseActivity
 import com.example.mvvm.base.BaseViewModel
 import kotlinx.android.synthetic.main.activity_create_schedule.*
+import kotlinx.android.synthetic.main.layout_start_end_date.*
 
 class CreateScheduleActivity : BaseActivity<CreateScheduleModel>() {
 
@@ -23,6 +24,14 @@ class CreateScheduleActivity : BaseActivity<CreateScheduleModel>() {
     override fun initEvent() {
         btLocation.setOnClickListener {
             startActivity(Intent(mContext, LocationActivity::class.java))
+        }
+
+        btStartLayout.setOnClickListener {
+            startActivity(Intent(mContext, ChooseDateActivity::class.java))
+        }
+
+        btEndLayout.setOnClickListener {
+            startActivity(Intent(mContext, ChooseDateActivity::class.java))
         }
     }
 }

@@ -12,6 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import com.example.modelapp.util.logi
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 
 class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -39,6 +41,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     var loadMore: () -> List<String> = { emptyList() }
         set(value) {
+            logi("setLoadMore")
             isCycle = false
             field = value
 
@@ -54,6 +57,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     var loadPreMore: () -> List<String> = { emptyList() }
         set(value) {
+            logi("setLoadPreMore")
             isCycle = false
             field = value
 
@@ -70,9 +74,7 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             invalidate()
         }
 
-    var selectListener: (String) -> Unit = {
-
-    }
+    var selectListener: (String) -> Unit = {}
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -266,19 +268,13 @@ class RollerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
     }
 
-    fun needCycle(needCycle: Boolean) {
+    fun setData(list: List<String>, needCycle: Boolean = true) {
         isCycle = needCycle
-        if (isCycle) {
-            loadMore = { emptyList() }
-            loadMore = { emptyList() }
-        }
-    }
 
-    fun setData(list: List<String>) {
         data.clear()
         data.addAll(list)
         begin = 0
-        end = 5.coerceAtLeast(data.size)
+        end = min(data.size, 5)
 
         if (end < 5) {
             if (!isCycle) {

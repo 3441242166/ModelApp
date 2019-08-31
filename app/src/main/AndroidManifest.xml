@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.modelapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -24,16 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
+        <activity android:name=".activity.ChooseDateActivity"></activity>
         <!-- 屏幕适配 -->
         <meta-data
             android:name="design_width_in_dp"
             android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640" />
-
-        <!-- 百度地图 -->
+            android:value="640" /> <!-- 百度地图 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="190PqFGG9G5dpIBGBL1gvzkghV4K1Qa4" />
@@ -45,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activity.LocationActivity" />
         <activity android:name=".activity.CreateScheduleActivity" />
 
@@ -53,7 +45,6 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
     </application>
 
 </manifest>

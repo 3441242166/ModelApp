@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.view_switch_date.view.*
 import java.util.*
 
 
+
+
+
 class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     //    private var leftIcon: Int
@@ -28,6 +31,8 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
                 "19", "20", "21", "22", "23", "24")
         val TIMES = listOf("00", "05", "10", "15", "20",
                 "25", "30", "35", "40", "45", "50", "55")
+        val MONTHS = listOf("1月", "2月", "3月", "4月", "5月", "6月",
+                "7月", "8月", "9月", "10月", "11月", "12月")
 
         const val LOAD_NUM = 10
     }
@@ -41,26 +46,55 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
     var endClick: (v: View) -> Unit = {}
     var typeClick: (isCheck: Boolean) -> Unit = {}
 
-    private val date = Date()
+    private var date = Date()
+    private val cal = Calendar.getInstance()
     private val year = 2018
 
     init {
         val inflater = LayoutInflater.from(getContext())
         inflater.inflate(R.layout.view_switch_date, this)
 
-        dateRoller.setData(listOf(getDateString(date, DateType.MONTH_DAY.str) + getWeek(date)))
-        dateRoller.needCycle(false)
-        hourRoller.setData(HOURS)
-        timeRoller.setData(TIMES)
+        initData()
+        initEvent()
 
-        yearRoller.setData(listOf("${year}年"))
-        yearRoller.needCycle(false)
-        monthRoller.setData(listOf("1月", "2月", "3月", "4月", "5月", "6月",
-                "7月", "8月", "9月", "10月", "11月", "12月"))
-        monthRoller.needCycle(false)
+    }
+
+    private fun initData() {
+        cal.time = date
+        beginMonthDay = -1
+        endMonthDay = 1
+        beginYear = -1
+        endYear = 1
+
+        dateRoller.setData(listOf(getDateString(date, DateType.MONTH_DAY.str) + getWeek(date)), false)
+        hourRoller.setData(getHours())
+        timeRoller.setData(getTimes())
+
+        yearRoller.setData(getYear(), false)
+        monthRoller.setData(getMonths())
         dayRoller.setData(getDays(yearRoller.getSelectString(), monthRoller.getSelectString()))
 
+    }
 
+    private fun getMonths(): List<String> {
+        val month = cal.get(Calendar.MONTH) + 1
+        val result = mutableListOf<String>()
+        result.addAll(MONTHS.subList(month, MONTHS.size - 1))
+        result.addAll(MONTHS.subList(0, month))
+        return result
+    }
+
+    private fun getYear() = listOf(cal.get(Calendar.YEAR).toString() + "年")
+
+    private fun getTimes(): List<String> {
+        return TIMES
+    }
+
+    private fun getHours(): List<String> {
+        return HOURS
+    }
+
+    private fun initEvent() {
         dateRoller.loadMore = {
             val newData = mutableListOf<String>()
             for (i in 1..LOAD_NUM) {
@@ -102,16 +136,12 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
         }
 
         btBegin.setOnClickListener {
-            btBegin.setTextColor(Color.parseColor("#2E7AFD"))
-            btEnd.setTextColor(Color.parseColor("#999999"))
-
+            setStartSelect(true)
             startClick(it)
         }
 
         btEnd.setOnClickListener {
-            btBegin.setTextColor(Color.parseColor("#999999"))
-            btEnd.setTextColor(Color.parseColor("#2E7AFD"))
-
+            setStartSelect(false)
             endClick(it)
         }
 
@@ -147,5 +177,23 @@ class SwitchDateTimeView @JvmOverloads constructor(context: Context, attrs: Attr
             result.add("$i 日")
         }
         return result
+    }
+
+    fun setStartSelect(select: Boolean) {
+        if (select) {
+            btBegin.setTextColor(Color.parseColor("#2E7AFD"))
+            btEnd.setTextColor(Color.parseColor("#999999"))
+        } else {
+            btBegin.setTextColor(Color.parseColor("#999999"))
+            btEnd.setTextColor(Color.parseColor("#2E7AFD"))
+        }
+    }
+
+    fun setDate(dateStr: String, timeStr: String) {
+        logi(dateStr + timeStr)
+        val type = if (btSwitch.isChecked) "yyyy年MM月dd日" else "MM月dd日HH:mm"
+        val newDate = getDateByDateString(dateStr + timeStr, type)
+        date = newDate
+        initData()
     }
 }
